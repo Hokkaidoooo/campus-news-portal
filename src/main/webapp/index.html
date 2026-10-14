@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+
+    <title>河海大学商学院</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="images/bitbug_favicon.ico">
+    <link href="css/com.css" rel="stylesheet" type="text/css"/>
+    <link href="css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/banner.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/album_two.js"></script>
+    <script src="js/vue2.7.14.js"></script>
+    <script src="js/axios.min.js"></script>
+</head>
+
+<body>
+<div id="ibody">
+    <div id="head">
+        <div class="head_box">
+            <div class="logo_box">
+                <img src="images/logo.jpg"/>
+            </div>
+            <div class="nav_box">
+                <ul class="nav_menu1">
+                    <li class="nav_one" v-for="item in menuItems" :key="item.Id">
+                        <a @click="handleMenuClick(item)" class="nav_a"  target="_blank">{{ item.TopmenuName }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="main_box">
+            <div class="index_banner sun_banner">
+                <div class="Yl-container"></div>
+            </div>
+            <div class="index_serch_box">
+                <div class="jiaoyuxiangmu">
+                    <span>教育项目</span>
+                    <a target="_blank" href="">本科生</a>
+                    <a target="_blank" href="">学术硕士</a>
+                    <a target="_blank" href="">学术博士</a>
+                    <a target="_blank" href="">专业硕士</a>
+                    <a target="_blank" href="">国际教育</a>
+                    <a target="_blank" href="">留学生教育</a>
+                    <a target="_blank" href="P">EDP</a>
+                </div>
+                <form method="get" class="top-search-form" id="g-search"  target="_blank">
+                    <div class="input-group search-wrap">
+                        <input name="keyword" class="form-control" type="text">
+                        <span class="input-group-btn">
+                      <button class="btn btn-default">
+                        <i class="fa fa-search"></i> 搜索
+                      </button>
+                    </span>
+                    </div>
+                </form>
+                <div class="index_serch">
+                    <span class="setLang">
+                            <span class="icon">
+                                <img src="images/zh-hans.jpg"/>
+                            </span>
+                            <a target="_blank" href="">中文</a></span>
+                    <span class="setLang">
+                            <span class="icon">
+                                <img src="images/en.jpg"/>
+                            </span>
+                            <a target="_blank" href="">English</a></span>
+                </div>
+            </div>
+
+            <div class="main_index">
+                <div class="main_sub main_news">
+                    <div class="main_sub_head" style="padding-left: 75px;"><span class="name_c">最新动态</span><span
+                            class="name_e">- Last News</span>
+                        <a target="_blank" href="newslist.html" class="teacher-more">更多>></a>
+                    </div>
+                    <div class="main_sub_con">
+
+
+                        <div class="myscroll">
+                            <ul class="new_txt">
+                                <li v-for="news in newsList" :key="news.newsID">
+                                    <span class="l-icon"></span>
+                                    <a href="/" target="_blank">{{ news.newsName }}</a>
+                                    <div class="li_time">{{ news.createTime }}</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="new_time_p">
+                            <span class="year">2024</span>
+                            <span class="month">01</span>
+                            <span class="day">10</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- main_news end -->
+                <div class="main_sub main_notice">
+                    <div class="main_sub_head"><span class="name_c">通知公告</span><span class="name_e">- Notice</span>
+                        <a target="_blank" href="noticelist.html" class="teacher-more">更多>></a>
+                    </div>
+                    <div class="main_sub_con">
+
+
+                        <div class="notice_two">
+
+                            <div class="notice_ul">
+                                <ul>
+                                    <li v-for="notice in noticeList" :key="notice.NoticeID">
+                                        <div class="li_icon"></div>
+                                        <div class="li_title">
+                                            <a target="_blank">{{ notice.NoticeName }}</a>
+                                        </div>
+                                        <div class="li_time">{{ notice.createTime }}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="footer_box">
+            <div class="footer_con">
+                <div class="footer_sub01">
+                    <div class="footer_title">网站地图</div>
+                    <div class="footer_m">
+                        <ul>
+                            <li><a target="_blank" href="">关于我们</a></li>
+                            <li><a target="_blank" href="">党建群团</a></li>
+                            <li><a target="_blank" href="">科学发展</a></li>
+                            <li><a target="_blank" href="">师资队伍</a></li>
+                            <li><a target="_blank" href="">合作交流</a>
+                            </li>
+                            <li><a target="_blank" href="">学生发展</a></li>
+                            <li><a target="_blank" href="">校友之家</a></li>
+                            <li><a target="_blank" href="">招聘招生</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer_sub02">
+                    <div class="footer_title">友情链接</div>
+                    <div class="footer_m">
+                        <ul>
+                            <li><a target="_blank" href="https://hhbs.hhu.edu.cn/bsd/">商学院旧版</a></li>
+                            <li><a target="_blank" href="http://www.hhu.edu.cn/">河海大学</a></li>
+                            <li><a target="_blank" href="http://rsc.hhu.edu.cn/">人事招聘</a></li>
+                            <li><a target="_blank"
+                                   href="https://bsd.hhu.edu.cn/article/detail/1498/">学院平台</a></li>
+                            <li><a target="_blank" href="http://localhost:8100/">用户登录</a></li>
+                            <li><a target="_blank" href="http://mba.hhu.edu.cn/">MBA教育中心</a></li>
+                            <li><a target="_blank" href="http://mem.hhu.edu.cn/f">工程硕士中心</a></li>
+                            <li><a target="_blank" href="http://syzy.hhu.edu.cn">商院智云</a></li>
+                            <li><a target="_blank" href="https://brp.hhu.edu.cn">会议预订</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer_sub03">
+                    <div class="footer_title">权威认证</div>
+                    <div class="footer_m">
+                        <img src="images/img1.jpg"/>
+                    </div>
+                    <div class="footer_title">官方二维码</div>
+                    <div class="footer_m">
+                        <img src="images/icon_f_ma.png"/>
+                    </div>
+                </div>
+                <div class="footer_sub04">
+                    <div class="footer_title">关于我们</div>
+
+                    <div class="footer_m">河海大学商学院是中国最早设立商学学科的高等院校之一。</div>
+                    <div class="footer_m  footer_info">地址：南京市江宁区佛城西路8号博学楼
+                        电话：025-58099269、025-58099270
+                        传真：025-58099269
+                        邮编：211100
+                        电子信箱：hhbs@hhu.edu.cn
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_bottom_box">
+            <div class="footer_bottom">
+                <span>Copyright©2019 版权所有　河海大学-商学院</span>
+                <span class="fr">苏ICP备12019886644号-1</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript" src="js/lunbo.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

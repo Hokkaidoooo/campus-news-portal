@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+
+    <title>河海大学商学院</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="images/bitbug_favicon.ico">
+    <link href="css/com.css" rel="stylesheet" type="text/css"/>
+    <link href="css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/banner.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/album_two.js"></script>
+    <script src="js/vue2.7.14.js"></script>
+    <script src="js/axios.min.js"></script>
+</head>
+
+<body>
+<div id="ibody2">
+    <div class="leftmenu">
+        <div class="menu-item" v-for="leftmenu in leftmenuList" :key="leftmenu.LeftmenuID">
+            {{ leftmenu.LeftmenuName }}
+        </div>
+    </div>
+    <div id="head">
+        <div class="head_box">
+            <div class="logo_box">
+                <img src="images/logo.jpg"/>
+            </div>
+            <div class="nav_box">
+                <ul class="nav_menu1">
+                    <li class="nav_one" v-for="item in menuItems" :key="item.Id">
+                        <a @click="handleMenuClick(item)" class="nav_a"  target="_blank">{{ item.TopmenuName }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="main_n_head">
+            <div class="n_name">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp商学院2023年新年寄语</div>
+        </div>
+        <div class="main_n_con">
+
+            <p><span style="font-size:10.5pt"><span style="background-color:white"><span style="font-family:Calibri,sans-serif"><strong><span style="font-size:13.5pt"><span style="font-family:黑体"><span style="color:black">&emsp&emsp&emsp;亲爱的老师们、同学们、海内外校友们、社会各界朋友们</span></span></span></strong><span style="font-size:13.5pt"><span style="font-family:黑体"><span style="color:black">：</span></span></span></span></span></span></p>
+
+            <p><span style="font-size:10.5pt"><span style="background-color:white"><span style="font-family:Calibri,sans-serif">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace">&nbsp;<span style="color:black">&emsp&emsp;&emsp;值2023年新年到来之际，我们向全院师生员工、离退休老同志、海内外校友以及多年来关心、支持学院建设与发展的各级领导、社会各界朋友，致以诚挚的节日问候和最美好的新年祝福！</span></span></span></span></span></span></p>
+
+            <p><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="color:black">&nbsp; &nbsp; &nbsp;</span>&emsp&emsp;&emsp;2022年是党和国家事业发展进程中具有重要里程碑意义的一年。这一年，全世界目光聚焦中华大地，在党的二十大的响亮声音中，思考国家发展、世界发展、时代发展的方向。这一年，以习近平同志为核心的党中央团结带领全国各族人民在中国式现代化道路上昂扬奋进，绘就了人类发展史上最为波澜壮阔的绚丽画卷。</span></span></p>
+
+            <p><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="color:black">&nbsp; &nbsp; &nbsp;&emsp&emsp;&emsp;2022年，学院统筹推进各项工作，在校党委、行政的坚强领导下，以习近平新时代中国特色社会主义思想为指导，深入贯彻落实党的十九届六中全会精神，坚持立德树人根本任务和国家&ldquo;双一流&rdquo;建设战略，以&ldquo;河海特色、世界知名&rdquo;为战略目标，以学科建设、师资队伍建设、国际认证为抓手，通过党建引领、科学治理、内涵发展、合力创新，学院在各个方面都取得了可喜的成绩。</span></span></span></p>
+
+            <p><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="color:black">&nbsp; &nbsp; &nbsp;&emsp&emsp;&emsp;学院着力优化内部治理体系，以党风带动教风、学风、师德师风和工作作风建设，推进党建和群团建设工作；发展经济学科，经济与金融学院挂牌；人力资源管理、会计学获批国家级一流本科专业建设点，工商管理、国际经济与贸易获批江苏省一流本科专业建设点；通过AMBA和BGA（金牌）的联合认证；成功举办首届中国工程管理案例大赛华东区晋级赛、江苏省研究生乡村振兴案例大赛，并获得多个奖项；另外，学院还获得&ldquo;互联网+&rdquo;国赛银奖1项、铜奖1项，省赛一等奖2项、二等奖3项、三等奖8项；&ldquo;挑战杯&rdquo;省赛特等奖2项、二等奖4项； </span></span></span></p>
+
+            <p><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="color:black">&nbsp; &nbsp; &nbsp;&emsp&emsp;&emsp;学院新增科研合同经费2024万元，获批国家自科4项、国家社科5项、教育部社科3项、江苏省社科7项（重点2项），新增ESI共发表自然科学和人文社科类高质量论文共计271篇。其中，SSCI论文92篇、CSSSI论文82篇、SCI论文97篇，全部A类论文共73篇。</span></span></span></p>
+
+            <p><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="color:black">&nbsp; &nbsp; &nbsp;&emsp&emsp;&emsp;学院还举办和承办了一系列高水平学术会议：第21届国际电子商务学术会议（与香港大学共同承办）、第七届&ldquo;世界水谷&rdquo;论坛暨第七届&ldquo;海外中国&rdquo;论坛（海南博鳌）、第七届&ldquo;世界水谷&rdquo;论坛东方管理专题东方之水与管理文化、第七届&ldquo;海外中国&rdquo;论坛东方管理专题东方管理与跨境之水&rdquo;等。新增教育部国别研究中心1个：&ldquo;几内亚湾-科特迪瓦研究中心&rdquo;。</span></span></span></p>
+
+            <p><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="background-color:white">&nbsp; &nbsp; &nbsp;<span style="color:black">&emsp&emsp;&emsp;老师们，同学们，校友们，朋友们：</span></span></span></span></p>
+
+            <p><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="background-color:white">&nbsp; &nbsp; &nbsp;<span style="color:black">&emsp&emsp;&emsp;回望2022，学院事业发展取得的每一项成绩，都离不开广大师生的努力和奉献，离不开广大校友和社会各界的关心和支持。在此，学院向大家致以崇高的敬意和衷心的感谢！2023年，学院将紧紧围绕&ldquo;内涵发展、质量提升&rdquo;主线，凝聚力量，整合资源，协调各方，全力推动学院战略目标的实现，以更高远的历史站位、更宽广的国际视野、更深邃的战略眼光，为建设世界一流特色研究型大学和世界知名商学院而不懈奋斗。</span></span></span></span></p>
+
+            <p><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="background-color:white">&nbsp; &nbsp;&nbsp;<span style="color:black">&emsp&emsp;&emsp;最后，恭祝大家在新的一年里，身体健康、工作顺利、学业进步、新年快乐、阖家幸福！</span></span></span></span></p>
+
+            <p style="text-align:right"><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="background-color:white">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></span></span><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="background-color:white">&nbsp;&nbsp;<span style="color:black">院长</span>&nbsp;&nbsp;<span style="color:black">周海炜</span></span></span></span></p>
+
+            <p style="text-align:right"><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="background-color:white">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style="color:black">党委书记</span>&nbsp;&nbsp;<span style="color:black">吴宝海</span></span></span></span></p>
+
+            <p style="text-align:right"><span style="font-size:14px"><span style="font-family:Courier New,Courier,monospace"><span style="background-color:white">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color:black">2022年12月31日</span></span></span></span></p>
+
+            <p style="text-align:justify">&nbsp;</p>
+
+        </div>
+    </div>
+</div>
+<!-- main end-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="footer_box">
+            <div class="footer_con">
+                <div class="footer_sub01">
+                    <div class="footer_title">网站地图</div>
+                    <div class="footer_m">
+                        <ul>
+                            <li><a target="_blank" href="">关于我们</a></li>
+                            <li><a target="_blank" href="">党建群团</a></li>
+                            <li><a target="_blank" href="">科学发展</a></li>
+                            <li><a target="_blank" href="">师资队伍</a></li>
+                            <li><a target="_blank" href="">合作交流</a>
+                            </li>
+                            <li><a target="_blank" href="">学生发展</a></li>
+                            <li><a target="_blank" href="">校友之家</a></li>
+                            <li><a target="_blank" href="">招聘招生</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer_sub02">
+                    <div class="footer_title">友情链接</div>
+                    <div class="footer_m">
+                        <ul>
+                            <li><a target="_blank" href="https://hhbs.hhu.edu.cn/bsd/">商学院旧版</a></li>
+                            <li><a target="_blank" href="http://www.hhu.edu.cn/">河海大学</a></li>
+                            <li><a target="_blank" href="http://rsc.hhu.edu.cn/">人事招聘</a></li>
+                            <li><a target="_blank"
+                                   href="https://bsd.hhu.edu.cn/article/detail/1498/">学院平台</a></li>
+                            <li><a target="_blank" href="http://localhost:8100/">用户登录</a></li>
+                            <li><a target="_blank" href="http://mba.hhu.edu.cn/">MBA教育中心</a></li>
+                            <li><a target="_blank" href="http://mem.hhu.edu.cn/f">工程硕士中心</a></li>
+                            <li><a target="_blank" href="http://syzy.hhu.edu.cn">商院智云</a></li>
+                            <li><a target="_blank" href="https://brp.hhu.edu.cn">会议预订</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer_sub03">
+                    <div class="footer_title">权威认证</div>
+                    <div class="footer_m">
+                        <img src="images/img1.jpg"/>
+                    </div>
+                    <div class="footer_title">官方二维码</div>
+                    <div class="footer_m">
+                        <img src="images/icon_f_ma.png"/>
+                    </div>
+                </div>
+                <div class="footer_sub04">
+                    <div class="footer_title">关于我们</div>
+
+                    <div class="footer_m">河海大学商学院是中国最早设立商学学科的高等院校之一。</div>
+                    <div class="footer_m  footer_info">地址：南京市江宁区佛城西路8号博学楼
+                        电话：025-58099269、025-58099270
+                        传真：025-58099269
+                        邮编：211100
+                        电子信箱：hhbs@hhu.edu.cn
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_bottom_box">
+            <div class="footer_bottom">
+                <span>Copyright©2019 版权所有　河海大学-商学院</span>
+                <span class="fr">苏ICP备12019886644号-1</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript" src="js/lunbo.js"></script>
+<script type="text/javascript" src="js/index2.js"></script>
+</body>
+</html>
