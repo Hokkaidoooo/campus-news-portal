@@ -1,0 +1,16 @@
+.Wdate{
+	border-color: #a7b5bc #ced9df #ced9df #a7b5bc;
+    border-style: solid;
+    border-width: 1px;
+    height: 32px;
+    line-height: 32px;
+    text-indent: 10px;
+    width: 169px;
+	background:#fff url(bgpic.gif) no-repeat right;
+}
+.Wdate::-ms-clear{display:none;}
+
+.WdateFmtErr{
+	font-weight:bold;
+	color:red;
+}
