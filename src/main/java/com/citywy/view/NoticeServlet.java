@@ -58,7 +58,8 @@ public class NoticeServlet extends HttpServlet {
     public void load(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = PublicUtil.getParam(request, "id", "");
         NoticeService noticeService = new NoticeService();
-        Notice notice = noticeService.get(id);
+        Notice notice = id.isEmpty() ? new Notice() : noticeService.get(id);
+        if (notice == null) { response.sendError(404, "记录不存在"); return; }
         Map<Integer, String> menus = new HashMap<Integer, String>();
         request.setAttribute("pages", notice);
         request.setAttribute("menus", menus);
@@ -89,7 +90,7 @@ public class NoticeServlet extends HttpServlet {
                 message = "修改成功";
             }
             //修改返回时返回之前的筛选条件
-            locationhref = request.getParameter("locationhref");
+            locationhref = WebPaths.returnQuery(request.getParameter("locationhref"));
             //正则去掉id=xxx&
             if (locationhref.contains("id=")) {
                 String regex = "";
@@ -139,7 +140,7 @@ public class NoticeServlet extends HttpServlet {
         //查询条件
         String condition = null;
         if (x_name != null && !"".equals(x_name)) {
-            condition = "noticeName like '%" + x_name + "%'";
+            condition = x_name;
         }
 
         int rowcount = noticeService.getRowCount(condition);
@@ -167,7 +168,7 @@ public class NoticeServlet extends HttpServlet {
             NoticeService noticeService = new NoticeService();
             boolean b = noticeService.delNotice(id);
             if (b) {
-                response.sendRedirect("/servlets/notice/list.htm");
+                response.sendRedirect(request.getContextPath() + "/servlets/notice/list.htm");
             }
         }
     }

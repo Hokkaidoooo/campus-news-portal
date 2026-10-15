@@ -58,7 +58,8 @@ public class TopmenuServlet extends HttpServlet {
     public void load(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = PublicUtil.getParam(request, "id", "");
         TopmenuService topmenuService = new TopmenuService();
-        Topmenu topmenu = topmenuService.get(id);
+        Topmenu topmenu = id.isEmpty() ? new Topmenu() : topmenuService.get(id);
+        if (topmenu == null) { response.sendError(404, "记录不存在"); return; }
         Map<Integer, String> menus = new HashMap<Integer, String>();
         request.setAttribute("pages", topmenu);
         request.setAttribute("menus", menus);
@@ -89,7 +90,7 @@ public class TopmenuServlet extends HttpServlet {
                 message = "修改成功";
             }
             //修改返回时返回之前的筛选条件
-            locationhref = request.getParameter("locationhref");
+            locationhref = WebPaths.returnQuery(request.getParameter("locationhref"));
             //正则去掉id=xxx&
             if (locationhref.contains("id=")) {
                 String regex = "";
@@ -139,7 +140,7 @@ public class TopmenuServlet extends HttpServlet {
         //查询条件
         String condition = null;
         if (x_name != null && !"".equals(x_name)) {
-            condition = "topmenuName like '%" + x_name + "%'";
+            condition = x_name;
         }
 
         int rowcount = topmenuService.getRowCount(condition);
@@ -167,7 +168,7 @@ public class TopmenuServlet extends HttpServlet {
             TopmenuService topmenuService = new TopmenuService();
             boolean b = topmenuService.delTopmenu(id);
             if (b) {
-                response.sendRedirect("/servlets/topmenu/list.htm");
+                response.sendRedirect(request.getContextPath() + "/servlets/topmenu/list.htm");
             }
         }
     }

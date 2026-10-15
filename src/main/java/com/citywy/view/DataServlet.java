@@ -92,10 +92,11 @@ public class DataServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         String leftmenuContent = request.getParameter("leftmenuContent");
+        if (leftmenuContent == null) { response.sendError(400, "缺少 leftmenuContent"); return; }
 
         LeftmenuService leftmenuService = new LeftmenuService();
 
-        List<Leftmenu> leftmenus = leftmenuService.getLeftmenuByContent("leftmenuContent='" + leftmenuContent + "'", "leftmenuID", "ASC");
+        List<Leftmenu> leftmenus = leftmenuService.getLeftmenuByContent(leftmenuContent, "leftmenuID", "ASC");
 
         Gson gson = new Gson();
         String jsonData = gson.toJson(leftmenus);

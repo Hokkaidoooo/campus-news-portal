@@ -59,7 +59,8 @@ public class UserServlet extends HttpServlet {
     public void load(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer id = PublicUtil.getParam(request, "id", 0);
         UserService userService = new UserService();
-        User user = userService.get(id);
+        User user = id == 0 ? new User() : userService.get(id);
+        if (user == null) { response.sendError(404, "记录不存在"); return; }
         Map<Integer, String> menus = new HashMap<Integer, String>();
         request.setAttribute("pages", user);
         request.setAttribute("menus", menus);
@@ -96,7 +97,7 @@ public class UserServlet extends HttpServlet {
                 message = "修改成功";
             }
             //修改返回时返回之前的筛选条件
-            locationhref = request.getParameter("locationhref");
+            locationhref = WebPaths.returnQuery(request.getParameter("locationhref"));
             //正则去掉id=xxx&
             if (locationhref.contains("id=")) {
                 String regex = "";
@@ -144,21 +145,21 @@ public class UserServlet extends HttpServlet {
         String x_name3 = PublicUtil.getParam(request, "x_name3", null);
 
         //查询条件
-        String condition = "1=1 ";
+        Map<String,String> condition = new HashMap<>();
         if (x_name1 != null && !"".equals(x_name1)) {
-            condition += "and role like '%" + x_name1 + "%'";
+            condition.put("role", x_name1);
         }
         if (x_name2 != null && !"".equals(x_name2)) {
-            condition += "and name like '%" + x_name2 + "%'";
+            condition.put("name", x_name2);
         }
         if (x_name3 != null && !"".equals(x_name3)) {
-            condition += "and uname like '%" + x_name3 + "%'";
+            condition.put("uname", x_name3);
         }
 
-        int rowcount = userService.getRowCount(condition);
+        int rowcount = userService.countFiltered(condition);
         int pageCount = (rowcount - 1) / pageSize + 1;
 
-        List<User> list = userService.getUserList(condition, pageNow, pageSize, x_order, x_sort);
+        List<User> list = userService.listFiltered(condition, pageNow, pageSize, x_order, x_sort);
 
         //分页参数
         PageUtil pageUtil = new PageUtil(pageNow, pageSize, pageCount, rowcount, x_order, x_sort, x_name, x_name1, x_name2, x_name3);
@@ -180,7 +181,7 @@ public class UserServlet extends HttpServlet {
             UserService userService = new UserService();
             boolean b = userService.delUser(id);
             if (b) {
-                response.sendRedirect("/servlets/user/list.htm");
+                response.sendRedirect(request.getContextPath() + "/servlets/user/list.htm");
             }
         }
     }

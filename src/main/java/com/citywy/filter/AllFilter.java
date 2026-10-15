@@ -1,68 +1,48 @@
 package com.citywy.filter;
- 
+
 import java.io.IOException;
-import java.util.regex.Pattern;
- 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
- 
-public class AllFilter implements Filter {
-	//要检查的session的名称
-	private String sessionKey;
-	//不拦截的URL正则表达式
-	private Pattern excepUrlPattern;
-	//检查不通过，转发的URl
-	private String forwardUrl;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-	/**
-	 * 随着Filter对象的创建而立即创建，因为AllFilter只创建一次，所以init只是创建一次。
-	 * @param cfg
-	 * @throws ServletException
-	 */
-	@Override
-	public void init(FilterConfig cfg) throws ServletException {
-		sessionKey=cfg.getInitParameter("sessionKey");
-		String excepUrlRegex = cfg.getInitParameter("excepUrlRegex");
-		if(excepUrlRegex!=null && !"".equals(excepUrlRegex)){
-			//将给定正则表达式编译成一个模式
-			excepUrlPattern=Pattern.compile(excepUrlRegex);
-		}
-		forwardUrl=cfg.getInitParameter("redirectUrl");
-	}
+/** 后台页面、管理路由和辅助上传共用这一个访问控制入口。 */
+public final class AllFilter implements Filter {
+    @Override public void init(FilterConfig config) { }
+    @Override public void destroy() { }
 
-	@Override
-	public void destroy() {
-		
-	}
- 
-	@Override
-	public void doFilter(ServletRequest req, ServletResponse res,
-			FilterChain chain) throws IOException, ServletException {
-//		System.out.println("执行过滤器");
-		HttpServletRequest request=(HttpServletRequest)req;
-		HttpServletResponse response=(HttpServletResponse)res;
-		response.setContentType("text/html;charset=utf-8");
-		request.setCharacterEncoding("UTF-8");
-		String servletPath = request.getServletPath();
-		//如果请求路径与forwardurl相同，或请求的路径是排除的URL时，则直接放行
-		System.out.println(forwardUrl+"--"+servletPath+"--"+excepUrlPattern.matcher(servletPath).matches());
-		if(servletPath.equals(forwardUrl)||excepUrlPattern.matcher(servletPath).matches()){
-			chain.doFilter(req, res);
-			return;
-		}
-		Object sessionobj=request.getSession().getAttribute(sessionKey);
-		if(sessionobj==null){
-			request.setAttribute("err", "您还没有登录！");
-			request.getRequestDispatcher(forwardUrl).forward(request, response);
-		}else{
-			chain.doFilter(req, res);
-		}
-	}
-	
+    public static boolean requiresLogin(String path) {
+        if (path.equals("/login.jsp") || path.equals("/servlets/LoginServlet.htm")) return false;
+        if (path.startsWith("/servlets/") || path.startsWith("/admin/ajax/")) return true;
+        if (path.endsWith(".jsp")) return true;
+        return path.startsWith("/admin/") && !path.startsWith("/admin/assets/");
+    }
+
+    @Override public void doFilter(ServletRequest input, ServletResponse output, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) input;
+        HttpServletResponse response = (HttpServletResponse) output;
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("X-Content-Type-Options", "nosniff");
+        String path = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
+        if (requiresLogin(path)) {
+            HttpSession session = request.getSession(false);
+            if (session == null || session.getAttribute("loginuser") == null) {
+                response.sendError(401, "请先登录后台");
+                return;
+            }
+            response.setHeader("Cache-Control", "no-store");
+            if ("cross-site".equals(request.getHeader("Sec-Fetch-Site"))) {
+                response.sendError(403, "后台不接受跨站请求");
+                return;
+            }
+        }
+        try {
+            chain.doFilter(request, response);
+        } catch (IllegalArgumentException error) {
+            request.getServletContext().log("请求参数不合法", error);
+            if (response.isCommitted()) throw error;
+            response.resetBuffer();
+            response.sendError(400, "请求参数不合法");
+        }
+    }
 }

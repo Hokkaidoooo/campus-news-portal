@@ -73,7 +73,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
-                        <form action="/servlets/notice/modify.htm" method="post" class="form-horizontal">
+                        <form action="${pageContext.request.contextPath}/servlets/notice/modify.htm" method="post" class="form-horizontal">
                             <div class="col-sm-9">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">公告标题:</label>

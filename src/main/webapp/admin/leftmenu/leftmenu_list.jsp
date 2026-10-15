@@ -62,7 +62,7 @@
             </script>
             <ul class="breadcrumb">
                 <li><i class="ace-icon fa fa-home home-icon"></i><a href="/">首页</a></li>
-                <li><a href="/servlets/leftmenu/list.htm">侧边栏管理</a></li>
+                <li><a href="${pageContext.request.contextPath}/servlets/leftmenu/list.htm">侧边栏管理</a></li>
             </ul>
         </div>
         <div class="page-content">
@@ -106,7 +106,7 @@
                                         <button type="button" class="btn btn-info btn-sm" onclick="fyhc(null)">
                                             <i class="ace-icon fa fa-search bigger-110"></i>搜索
                                         </button>
-                                        <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='/servlets/leftmenu/load.htm'">
+                                        <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='${pageContext.request.contextPath}/servlets/leftmenu/load.htm'">
                                             <i class="ace-icon fa fa-plus-circle bigger-110"></i>添加
                                         </button>
                                     </div>

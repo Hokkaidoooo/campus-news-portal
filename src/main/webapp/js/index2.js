@@ -17,7 +17,7 @@ new Vue({
             this.formatDateList(this.noticeList);
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            PortalConfig.reportError(error);
         }
 
         // 获取查询参数中的 fatherId
@@ -25,7 +25,7 @@ new Vue({
         const fatherId = urlParams.get('fatherId');
 
         // 使用 fatherId 请求数据并加载到页面
-        axios.get('http://localhost:8100/api/data', {
+        axios.get(PortalConfig.apiUrl, {
             params: {
                 dataType: 'leftmenu',
                 leftmenuContent: fatherId,
@@ -33,15 +33,14 @@ new Vue({
         })
             .then((response) => {
                 this.leftmenuList = response.data;
-                console.log(this.leftmenuList)
             })
             .catch((error) => {
-                console.error('获取 Leftmenu 数据时出错：', error);
+                PortalConfig.reportError(error);
             });
     },
     methods: {
         async fetchData(dataType) {
-            const response = await axios.get('http://localhost:8100/api/data', {
+            const response = await axios.get(PortalConfig.apiUrl, {
                 params: { dataType },
             });
             return response.data;

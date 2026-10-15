@@ -55,7 +55,7 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="/servlets/LoginServlet.htm?type=logout">
+                            <a href="${pageContext.request.contextPath}/servlets/LoginServlet.htm?type=logout">
                                 <i class="ace-icon fa fa-power-off"></i>
                                 退出登录
                             </a>

@@ -10,37 +10,37 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" href="/admin/assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="/admin/assets/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/font-awesome.min.css" />
 
 		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
-		<link rel="stylesheet" href="/admin/assets/css/ace-fonts.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/ace-fonts.css" />
 
 		<!-- ace styles -->
-		<link rel="stylesheet" href="/admin/assets/css/ace.min.css" id="main-ace-style" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/ace.min.css" id="main-ace-style" />
 
 		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="/admin/assets/css/ace-part2.min.css" />
+			<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/ace-part2.min.css" />
 		<![endif]-->
-		<link rel="stylesheet" href="/admin/assets/css/ace-skins.min.css" />
-		<link rel="stylesheet" href="/admin/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/ace-rtl.min.css" />
 
 		<!--[if lte IE 9]>
-		  <link rel="stylesheet" href="/admin/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/ace-ie.min.css" />
 		<![endif]-->
 
 		<!-- inline styles related to this page -->
 
 		<!-- ace settings handler -->
-		<script src="/admin/assets/js/ace-extra.min.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/ace-extra.min.js"></script>
 
 		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 
 		<!--[if lte IE 8]>
-		<script src="/admin/assets/js/html5shiv.min.js"></script>
-		<script src="/admin/assets/js/respond.min.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/html5shiv.min.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
 
@@ -88,7 +88,7 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="/admin/assets/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="${pageContext.request.contextPath}/admin/assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
 									Jason
@@ -836,40 +836,40 @@
 
 		<!--[if !IE]> -->
 		<script type="text/javascript">
-			window.jQuery || document.write("<script src='/admin/assets/js/jquery.min.js'>"+"<"+"/script>");
+			window.jQuery || document.write("<script src='${pageContext.request.contextPath}/admin/assets/js/jquery.min.js'>"+"<"+"/script>");
 		</script>
 
 		<!-- <![endif]-->
 
 		<!--[if IE]>
 <script type="text/javascript">
- window.jQuery || document.write("<script src='/admin/assets/js/jquery1x.min.js'>"+"<"+"/script>");
+ window.jQuery || document.write("<script src='${pageContext.request.contextPath}/admin/assets/js/jquery1x.min.js'>"+"<"+"/script>");
 </script>
 <![endif]-->
 		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='/admin/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+			if('ontouchstart' in document.documentElement) document.write("<script src='${pageContext.request.contextPath}/admin/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
-		<script src="/admin/assets/js/bootstrap.min.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/bootstrap.min.js"></script>
 
 		<!-- page specific plugin scripts -->
 
 		<!-- ace scripts -->
-		<script src="/admin/assets/js/ace-elements.min.js"></script>
-		<script src="/admin/assets/js/ace.min.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/ace-elements.min.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/ace.min.js"></script>
 
 		<!-- inline scripts related to this page -->
 
 		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
-		<link rel="stylesheet" href="/admin/assets/css/ace.onpage-help.css" />
-		<link rel="stylesheet" href="/admin/assets/js/themes/sunburst.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/js/themes/sunburst.css" />
 
 		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
-		<script src="/admin/assets/js/ace/elements.onpage-help.js"></script>
-		<script src="/admin/assets/js/ace/ace.onpage-help.js"></script>
-		<script src="/admin/assets/js/rainbow.js"></script>
-		<script src="/admin/assets/js/language/generic.js"></script>
-		<script src="/admin/assets/js/language/html.js"></script>
-		<script src="/admin/assets/js/language/css.js"></script>
-		<script src="/admin/assets/js/language/javascript.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/ace/elements.onpage-help.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/ace/ace.onpage-help.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/rainbow.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/language/generic.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/language/html.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/language/css.js"></script>
+		<script src="${pageContext.request.contextPath}/admin/assets/js/language/javascript.js"></script>
 	</body>
 </html>

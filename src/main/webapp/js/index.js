@@ -16,12 +16,12 @@ new Vue({
             this.formatDateList(this.noticeList);
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            PortalConfig.reportError(error);
         }
     },
     methods: {
         async fetchData(dataType) {
-            const response = await axios.get('http://localhost:8100/api/data', {
+            const response = await axios.get(PortalConfig.apiUrl, {
                 params: { dataType },
             });
             return response.data;

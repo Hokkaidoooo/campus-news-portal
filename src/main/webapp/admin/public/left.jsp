@@ -30,7 +30,7 @@
 
     <ul class="nav nav-list">
         <li class="" id="index">
-            <a href="/servlets/index.htm">
+            <a href="${pageContext.request.contextPath}/servlets/index.htm">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> 首页 </span>
             </a>
@@ -38,35 +38,35 @@
         </li>
 
         <li class="">
-            <a href="/servlets/news/list.htm">
+            <a href="${pageContext.request.contextPath}/servlets/news/list.htm">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> 动态管理 </span>
             </a>
             <b class="arrow"></b>
         </li>
         <li class="">
-            <a href="/servlets/notice/list.htm">
+            <a href="${pageContext.request.contextPath}/servlets/notice/list.htm">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> 公告管理 </span>
             </a>
             <b class="arrow"></b>
         </li>
         <li class="">
-            <a href="/servlets/topmenu/list.htm">
+            <a href="${pageContext.request.contextPath}/servlets/topmenu/list.htm">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> 导航栏管理 </span>
             </a>
             <b class="arrow"></b>
         </li>
         <li class="">
-            <a href="/servlets/leftmenu/list.htm">
+            <a href="${pageContext.request.contextPath}/servlets/leftmenu/list.htm">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> 侧边栏管理 </span>
             </a>
             <b class="arrow"></b>
         </li>
         <li class="">
-            <a href="/servlets/user/list.htm">
+            <a href="${pageContext.request.contextPath}/servlets/user/list.htm">
                 <i class="menu-icon fa fa-tag"></i>
                 <span class="menu-text">用户管理</span>
 
