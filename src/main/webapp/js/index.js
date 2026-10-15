@@ -20,6 +20,7 @@ new Vue({
         }
     },
     methods: {
+        articleUrl: PortalConfig.articleUrl,
         async fetchData(dataType) {
             const response = await axios.get(PortalConfig.apiUrl, {
                 params: { dataType },

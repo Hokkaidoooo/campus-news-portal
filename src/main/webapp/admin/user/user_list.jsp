@@ -2,13 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-    String base = request.getScheme()+"://"+request.getServerName()+(request.getServerPort()!=80?":"+request.getServerPort():"")+request.getContextPath()+"/";
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="<%=base%>">
+    <base href="<c:url value='/'/>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
     <title>用户管理</title>
@@ -108,15 +105,15 @@
                                         </div>--%>
                                         <div class="form-group">
                                             <label></label>
-                                            <input type="text" class="form-control" id="x_name1" value="${pageutil.x_name1 }" onkeyup="fyhc(event)" placeholder="角色">
-                                            <input type="text" class="form-control" id="x_name2" value="${pageutil.x_name2 }" onkeyup="fyhc(event)" placeholder="用户名">
-                                            <input type="text" class="form-control" id="x_name3" value="${pageutil.x_name3 }" onkeyup="fyhc(event)" placeholder="姓名">
+                                            <input type="text" class="form-control" id="x_name1" value="<c:out value='${pageutil.x_name1}'/>" onkeyup="fyhc(event)" placeholder="角色">
+                                            <input type="text" class="form-control" id="x_name2" value="<c:out value='${pageutil.x_name2}'/>" onkeyup="fyhc(event)" placeholder="用户名">
+                                            <input type="text" class="form-control" id="x_name3" value="<c:out value='${pageutil.x_name3}'/>" onkeyup="fyhc(event)" placeholder="姓名">
                                         </div>
                                         <button type="button" class="btn btn-info btn-sm" onclick="fyhc(null)">
-                                            <i class="ace-icon fa fa-search bigger-110"></i>搜索
+                                            <i class="ace-icon fa fa-search bigger-110" aria-hidden="true"></i>搜索
                                         </button>
                                         <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='${pageContext.request.contextPath}/servlets/user/load.htm'">
-                                            <i class="ace-icon fa fa-plus-circle bigger-110"></i>添加
+                                            <i class="ace-icon fa fa-plus-circle bigger-110" aria-hidden="true"></i>添加
                                         </button>
                                     </div>
                                 </div>
@@ -151,24 +148,24 @@
                                                         </label>
                                                     </td>
                                                     <td>${status.index + 1 }</td>
-                                                    <td>${user.name }</td>
+                                                    <td><c:out value="${user.name}"/></td>
                                                     <td>
-                                                            ${user.uname}
+                                                        <c:out value="${user.uname}"/>
                                                     </td>
                                                     <td>
-                                                            ${user.role}
+                                                        <c:out value="${user.role}"/>
                                                     </td>
                                                     <td>
-                                                        ${user.valid}
+                                                        <c:out value="${user.valid}"/>
                                                     </td>
                                                     <td>
                                                         <div class="">
-                                                            <a class="blue" href="javascript:fybj(${user.id })">
-                                                                <i class="ace-icon fa fa-pencil bigger-130"></i> 修改
+                                                            <a class="blue" href="#" data-edit-id="<c:out value='${user.id}'/>">
+                                                                <i class="ace-icon fa fa-pencil bigger-130" aria-hidden="true"></i> 修改
                                                             </a>
                                                             &nbsp;
-                                                            <a class="red" href="javascript:fysc(${user.id })">
-                                                                <i class="ace-icon fa fa-trash-o bigger-130"></i> 删除
+                                                            <a class="red" href="#" data-delete-id="<c:out value='${user.id}'/>">
+                                                                <i class="ace-icon fa fa-trash-o bigger-130" aria-hidden="true"></i> 删除
                                                             </a>
                                                         </div>
                                                     </td>
@@ -265,11 +262,9 @@
 <!-- ace scripts -->
 <script src="admin/assets/js/ace-elements.min.js"></script>
 <script src="admin/assets/js/ace.min.js"></script>
-<script type="text/javascript">
-    pubSelected("fy_pagesize",'${pageutil.x_pageSize}');
-    pubSelected("fy_order",'${pageutil.x_order}');
-    pubSelected("fy_sort",'${pageutil.x_sort}');
-    fysz('${pageutil.x_pageNow}',"servlets/user/drop.htm","servlets/user/load.htm","servlets/user/list.htm");
-</script>
+<div id="page-settings" hidden data-size="<c:out value='${pageutil.x_pageSize}'/>"
+     data-order="<c:out value='${pageutil.x_order}'/>" data-sort="<c:out value='${pageutil.x_sort}'/>"
+     data-now="<c:out value='${pageutil.x_pageNow}'/>" data-kind="user"></div>
+<script src="admin/assets/js/my/list-actions.js"></script>
 </body>
 </html>

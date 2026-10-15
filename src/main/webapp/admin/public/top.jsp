@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- #section:basics/navbar.layout -->
 <div id="navbar" class="navbar navbar-default">
     <script type="text/javascript">
@@ -47,7 +48,7 @@
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <span class="user-info">
 							<small>欢迎,</small>
-                            ${username}
+                            <c:out value="${sessionScope.username}"/>
 						</span>
 
                         <i class="ace-icon fa fa-caret-down"></i>

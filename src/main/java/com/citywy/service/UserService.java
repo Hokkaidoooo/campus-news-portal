@@ -23,7 +23,9 @@ public final class UserService {
         if (users.isEmpty()) return false;
         if (users.size() != 1) throw new IllegalStateException("Duplicate login identity");
         Map<String, Object> user = users.get(0);
-        if (!"有效".equals(user.get("valid"))) return false;
+        User account = new User();
+        account.setValid((String) user.get("valid"));
+        if (!account.isActive()) return false;
         return PasswordHashes.verify(credentials.getPassword(), (String) user.get("password"));
     }
 

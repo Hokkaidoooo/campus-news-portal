@@ -1,6 +1,13 @@
-// API 路径随当前应用的脚本地址确定，同一 WAR 可部署在不同上下文和端口。
+// 页面与 API 都以此脚本所属应用为基准，避免在具名部署时跳出上下文。
+const portalBaseUrl = new URL('../', document.currentScript.src);
 window.PortalConfig = Object.freeze({
-    apiUrl: new URL('../api/data', document.currentScript.src).href,
+    apiUrl: new URL('api/data', portalBaseUrl).href,
+    articleUrl(type, id) {
+        const url = new URL('article', portalBaseUrl);
+        url.searchParams.set('type', type);
+        url.searchParams.set('id', id);
+        return url.href;
+    },
     reportError(error) {
         console.error('门户内容加载失败', error);
         let message = document.getElementById('portal-error');

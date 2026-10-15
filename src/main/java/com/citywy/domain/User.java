@@ -10,4 +10,6 @@ public class User {
     private String password;
     private String role;
     private String valid;
+
+    public boolean isActive() { return "有效".equals(valid); }
 }

@@ -38,22 +38,22 @@ function fycs(){
     page.x_name3=$("#x_name3").val();
     var res="";
     if(page.starttime){
-        res+="starttime="+page.starttime+"&";
+        res+="starttime="+encodeURIComponent(page.starttime)+"&";
     }
     if(page.endtime){
-        res+="endtime="+page.endtime+"&";
+        res+="endtime="+encodeURIComponent(page.endtime)+"&";
     }
     if(page.sname){
-        res+="x_name="+page.sname+"&";
+        res+="x_name="+encodeURIComponent(page.sname)+"&";
     }
     if(page.x_name1){
-        res+="x_name1="+page.x_name1+"&";
+        res+="x_name1="+encodeURIComponent(page.x_name1)+"&";
     }
     if(page.x_name2){
-        res+="x_name2="+page.x_name2+"&";
+        res+="x_name2="+encodeURIComponent(page.x_name2)+"&";
     }
     if(page.x_name3){
-        res+="x_name3="+page.x_name3+"&";
+        res+="x_name3="+encodeURIComponent(page.x_name3)+"&";
     }
     res+="x_now="+page.now+"&x_size="+page.size+"&x_order="+page.order+"&x_sort="+page.sort;
     return res;
@@ -96,7 +96,7 @@ function fysc(id){
     if(!id||!window.confirm("确认删除吗")){
         return;
     }
-    pubLinkJump(ink.home+page.drop+"?id="+id+"&"+fycs());
+    pubLinkJump(ink.home+page.drop+"?id="+encodeURIComponent(id)+"&"+fycs());
 }
 
 //分页删除(多个)
@@ -117,5 +117,5 @@ function fybj(id){
     if(!id){
         return;
     }
-    pubLinkJump(ink.home+page.edit+"?id="+id+"&"+fycs());
+    pubLinkJump(ink.home+page.edit+"?id="+encodeURIComponent(id)+"&"+fycs());
 }

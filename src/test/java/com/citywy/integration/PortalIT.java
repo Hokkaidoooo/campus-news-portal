@@ -99,6 +99,7 @@ public class PortalIT {
             assertEquals(200, client.get("/servlets/news/list.htm").status);
             for (String kind : Arrays.asList("news", "notice", "topmenu", "leftmenu", "user"))
                 assertEquals("新建页面必须可用 " + kind, 200, client.get("/servlets/" + kind + "/load.htm").status);
+            verifyRolesAndRevocation(client, jdbc, user, password);
             verifyUploads(client, upload);
             Reply add = client.form("/servlets/news/modify.htm", "newsName=" + encode("新增验收新闻") + "&newsContent=" + encode("实际写入") + "&newsID=");
             assertEquals(200, add.status);
@@ -138,10 +139,37 @@ public class PortalIT {
         for (String file : Arrays.asList("index.html", "index2.html", "newslist.html", "noticelist.html", "js/lunbo.js")) {
             Reply page = client.get("/" + file);
             assertEquals(200, page.status);
-            assertArrayEquals("静态文件不能随服务器默认编码变化 " + file,
-                    Files.readAllBytes(Paths.get("src/main/webapp").resolve(file)), page.body);
+            try (java.util.zip.ZipFile war = new java.util.zip.ZipFile("target/campus-news.war");
+                 InputStream input = war.getInputStream(war.getEntry(file));
+                 ByteArrayOutputStream bytes = new ByteArrayOutputStream()) {
+                byte[] buffer = new byte[8192];
+                for (int count; (count = input.read(buffer)) != -1;) bytes.write(buffer, 0, count);
+                assertArrayEquals("静态响应必须与被部署 WAR 的字节相同 " + file, bytes.toByteArray(), page.body);
+            }
         }
         assertTrue(client.get("/api/data?dataType=news").text().contains("已验证新闻"));
+        for (String kind : Arrays.asList("news", "notice")) {
+            String query = "?type=" + kind + "&id=verified-" + kind;
+            Reply detail = client.get("/api/article" + query);
+            assertEquals(200, detail.status);
+            JsonObject article = JsonParser.parseString(detail.text()).getAsJsonObject();
+            assertEquals(kind, article.get("type").getAsString());
+            assertEquals("verified-" + kind, article.get("id").getAsString());
+            assertTrue(article.get("content").getAsString().startsWith("真实测试库"));
+            Reply page = client.get("/article" + query);
+            assertEquals(200, page.status);
+            assertTrue(page.text().contains(article.get("content").getAsString()));
+        }
+        for (String route : Arrays.asList("/api/article", "/article")) {
+            for (String query : Arrays.asList("", "?type=news", "?type=user&id=1", "?type=news&id=", "?type=news&id=a&id=b",
+                    "?type=news&type=notice&id=verified-news", "?type=news&id=" + encode("x' OR 1=1 --"))) {
+                assertEquals("正文非法参数必须返回 400 " + query, 400, client.get(route + query).status);
+            }
+            assertEquals(404, client.get(route + "?type=news&id=missing-record").status);
+            assertEquals(404, client.get(route + "?type=notice&id=verified-news").status);
+            assertEquals(405, client.form(route, "type=news&id=verified-news").status);
+        }
+        assertEquals(404, client.get("/WEB-INF/views/article.jsp").status);
         JsonArray menu = JsonParser.parseString(client.get("/api/data?dataType=leftmenu&leftmenuContent=" + encode("O'Reilly")).text()).getAsJsonArray();
         assertEquals(1, menu.size());
         List<String> protectedPaths;
@@ -180,6 +208,55 @@ public class PortalIT {
         assertEquals(415, client.multipart("/admin/ajax/pic.htm", "fake.png", "fake".getBytes(StandardCharsets.UTF_8)).status);
         assertEquals(413, client.multipart("/admin/ajax/pic.htm", "large.png", new byte[1024 * 1024 + 1]).status);
         try (java.util.stream.Stream<Path> files = Files.list(upload)) { assertEquals(3, files.count()); }
+    }
+
+    private static void verifyRolesAndRevocation(Http manager, String jdbc, String dbUser, String dbPassword) throws Exception {
+        String name = "verification_editor";
+        assertEquals(200, manager.form("/servlets/user/modify.htm", accountForm(0, name, "用户", "有效", PASSWORD)).status);
+        int id;
+        try (Connection connection = DriverManager.getConnection(jdbc, dbUser, dbPassword);
+             PreparedStatement query = connection.prepareStatement("SELECT id FROM `user` WHERE name = ?")) {
+            query.setString(1, name);
+            try (ResultSet rows = query.executeQuery()) { assertTrue(rows.next()); id = rows.getInt(1); assertFalse(rows.next()); }
+        }
+        Http editor = new Http(manager.base);
+        assertEquals(302, editor.form("/servlets/LoginServlet.htm", "uname=" + name + "&upwd=" + PASSWORD).status);
+        Reply dashboard = editor.get("/servlets/index.htm");
+        assertEquals(200, dashboard.status);
+        assertFalse(dashboard.text().contains("/servlets/user/list.htm"));
+        assertEquals(200, editor.form("/servlets/news/modify.htm",
+                "newsID=&newsName=" + encode("普通编辑已验证") + "&newsContent=" + encode("保留内容编辑能力")).status);
+        for (String action : Arrays.asList("list", "load", "modify", "drop", "view")) {
+            String path = "/servlets/user/" + action + ".htm";
+            assertEquals("普通用户不能通过 GET 管理账号", 403, editor.get(path + "?id=" + id).status);
+            assertEquals("普通用户不能通过 POST 修改自身角色", 403,
+                    editor.form(path, accountForm(id, name, "管理员", "有效", "")).status);
+        }
+        assertEquals(403, editor.get("/admin/user/user_load.jsp").status);
+        assertEquals(403, editor.get("/admin/user/user_list.jsp").status);
+        try (Connection connection = DriverManager.getConnection(jdbc, dbUser, dbPassword);
+             PreparedStatement query = connection.prepareStatement("SELECT role, valid FROM `user` WHERE id = ?")) {
+            query.setInt(1, id);
+            try (ResultSet rows = query.executeQuery()) { assertTrue(rows.next()); assertEquals("用户", rows.getString(1)); assertEquals("有效", rows.getString(2)); }
+        }
+        assertEquals(200, manager.form("/servlets/user/modify.htm", accountForm(id, name, "用户", "无效", "")).status);
+        assertEquals("停用必须撤销既有会话", 401, editor.get("/servlets/news/list.htm").status);
+        assertEquals(401, editor.form("/servlets/LoginServlet.htm", "uname=" + name + "&upwd=" + PASSWORD).status);
+        assertEquals(200, manager.form("/servlets/user/modify.htm", accountForm(id, name, "用户", "有效", "")).status);
+        assertEquals("恢复账号不能复活被撤销的会话", 401, editor.get("/admin/index.jsp").status);
+        assertEquals(302, editor.form("/servlets/LoginServlet.htm", "uname=" + name + "&upwd=" + PASSWORD).status);
+        assertEquals(200, manager.form("/servlets/user/modify.htm", accountForm(id, name, "管理员", "有效", "")).status);
+        assertEquals(200, editor.get("/servlets/user/list.htm").status);
+        assertEquals(200, manager.form("/servlets/user/modify.htm", accountForm(id, name, "用户", "有效", "")).status);
+        assertEquals("降权必须立即影响既有会话", 403, editor.get("/servlets/user/list.htm").status);
+        assertEquals(200, editor.get("/servlets/news/list.htm").status);
+        assertEquals(302, manager.get("/servlets/user/drop.htm?id=" + id).status);
+        assertEquals("删除必须撤销既有会话", 401, editor.get("/servlets/news/list.htm").status);
+    }
+
+    private static String accountForm(int id, String name, String role, String valid, String password) throws Exception {
+        return "id=" + id + "&name=" + encode(name) + "&uname=" + encode("测试编辑") + "&role=" + encode(role)
+                + "&valid=" + encode(valid) + "&password=" + encode(password);
     }
 
     private static String encode(String value) throws Exception { return URLEncoder.encode(value, "UTF-8"); }

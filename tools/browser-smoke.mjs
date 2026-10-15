@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
+import { verifyReading, verifySafeEditing } from './browser-content-checks.mjs';
 
 const [base, output] = process.argv.slice(2);
 if (!base || !output) throw new Error('需要真实部署 URL 和截图路径');
@@ -8,7 +9,10 @@ try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 850 } });
     const errors = [];
     const apiRequests = [];
-    page.on('pageerror', error => errors.push(error.message));
+    page.on('pageerror', error => {
+        errors.push(error.message);
+        console.error(`BROWSER_PAGE_ERROR ${page.url()} ${error.stack}`);
+    });
     page.on('request', request => { if (request.url().includes('/api/data')) apiRequests.push(request.url()); });
     await page.goto(`${base}/index.html`);
     assert.equal(await page.title(), '河海大学商学院');
@@ -37,10 +41,12 @@ try {
     await Promise.all([page.waitForURL('**/servlets/index.htm'), page.getByRole('button', { name: '登录', exact: true }).click()]);
     assert.ok((await page.content()).includes('verification_admin'));
     await page.screenshot({ path: `${output}-admin.png`, fullPage: true });
+    const safeEditing = await verifySafeEditing(page, base);
+    const reading = await verifyReading(page, base, output);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${base}/login.jsp`);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await page.screenshot({ path: `${output}-login-mobile.png`, fullPage: true });
     assert.deepEqual(errors, []);
-    console.log(JSON.stringify({ base, apiRequests: apiRequests.length, staticChinese: 'passed', banners: banners.length, login: 'passed', mobileLogin: 'passed' }));
+    console.log(JSON.stringify({ base, apiRequests: apiRequests.length, staticChinese: 'passed', banners: banners.length, login: 'passed', mobileLogin: 'passed', safeEditing, reading }));
 } finally { await browser.close(); }

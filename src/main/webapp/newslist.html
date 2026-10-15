@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en">
+<html lang="zh-CN">
 <head>
 
     <title>河海大学商学院</title>
@@ -51,14 +51,14 @@
                             <ul class="new_txt column">
                                 <li v-for="news in newsList.slice(0, Math.ceil(newsList.length / 2))" :key="news.newsID">
                                     <span class="l-icon"></span>
-                                    <a href="/" target="_blank">{{ news.newsName }}</a>
+                                    <a :href="articleUrl('news', news.newsID)">{{ news.newsName }}</a>
                                     <div class="li_time">{{ news.createTime }}</div>
                                 </li>
                             </ul>
                             <ul class="new_txt column">
                                 <li v-for="news in newsList.slice(Math.ceil(newsList.length / 2))" :key="news.newsID">
                                     <span class="l-icon"></span>
-                                    <a href="/" target="_blank">{{ news.newsName }}</a>
+                                    <a :href="articleUrl('news', news.newsID)">{{ news.newsName }}</a>
                                     <div class="li_time">{{ news.createTime }}</div>
                                 </li>
                             </ul>

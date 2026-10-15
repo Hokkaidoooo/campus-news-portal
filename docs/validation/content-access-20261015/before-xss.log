@@ -1,0 +1,18 @@
+node:internal/modules/run_main:122
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: news 列表执行了正文中的脚本
+
+'executed' !== null
+
+    at verifySafeEditing (file:///D:/%E6%A1%8C%E9%9D%A2/GitHub%E5%B1%95%E7%A4%BA%E6%95%B4%E7%90%86/campus-news-portal/tools/browser-content-checks.mjs:16:16)
+    at async file:///D:/%E6%A1%8C%E9%9D%A2/GitHub%E5%B1%95%E7%A4%BA%E6%95%B4%E7%90%86/campus-news-portal/tools/browser-smoke.mjs:41:25 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'executed',
+  expected: null,
+  operator: 'strictEqual'
+}
+
+Node.js v22.14.0

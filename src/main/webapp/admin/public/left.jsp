@@ -1,15 +1,9 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%
-    String base = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() != 80 ? ":" + request.getServerPort() : "") + request.getContextPath() + "/";
-    Object message = request.getAttribute("message");
-    if (message == null) {
-        message = request.getParameter("message");
-    }
-%>
 <!-- #section:basics/sidebar -->
-<div id="sidebar" class="sidebar responsive">
+<div id="sidebar" class="sidebar responsive" data-home="<c:url value='/'/>"
+     data-current-menu="<c:out value='${param.now}'/>" data-message="<c:out value='${requestScope.message}'/>">
     <script type="text/javascript">
         try {
             ace.settings.check('sidebar', 'fixed')
@@ -65,6 +59,7 @@
             </a>
             <b class="arrow"></b>
         </li>
+        <c:if test="${canManageUsers}">
         <li class="">
             <a href="${pageContext.request.contextPath}/servlets/user/list.htm">
                 <i class="menu-icon fa fa-tag"></i>
@@ -75,6 +70,7 @@
 
             <b class="arrow"></b>
         </li>
+        </c:if>
     </ul><!-- /.nav-list -->
 
     <!-- #section:basics/sidebar.layout.minimize -->
@@ -82,9 +78,9 @@
 <%--        <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left"--%>
 <%--           data-icon2="ace-icon fa fa-angle-double-right"></i>--%>
     </div>
-    <script src="../admin/assets/js/jquery.min.js"></script>
-    <script src="../admin/assets/js/bootbox.min.js"></script>
-    <script src="../admin/assets/js/my/public.js"></script>
+    <script src="<c:url value='/admin/assets/js/jquery.min.js'/>"></script>
+    <script src="<c:url value='/admin/assets/js/bootbox.min.js'/>"></script>
+    <script src="<c:url value='/admin/assets/js/my/public.js'/>"></script>
     <!-- /section:basics/sidebar.layout.minimize -->
     <script type="text/javascript">
         try {
@@ -94,12 +90,13 @@
         var ckdialog;
         $(document).ready(function () {
             //设置左侧导航被选中
-            var now = $("#<%=request.getParameter("now")%>");
+            var sidebar = document.getElementById('sidebar');
+            var now = $(document.getElementById(sidebar.getAttribute('data-current-menu')));
             now.addClass("active");
             now.parent().css('display', 'block');
             now.parent().parent().addClass("active");
             //数据弹窗
-            var tip = "<%=message!=null?message.toString():""%>";
+            var tip = sidebar.getAttribute('data-message');
             if (tip) {
                 cktc_tanchuang(tip);
             }
@@ -110,12 +107,12 @@
 
         function cktc_tanchuang(cktc_tip) {
             ckdialog = bootbox.dialog({
-                message: '<p class="text-center mb-0" style="font-size:15px;">' + cktc_tip + '</p>',
+                message: $('<p class="text-center mb-0" style="font-size:15px;"></p>').text(cktc_tip),
                 closeButton: false
             });
         }
         //新建ink对象，保存ink.home,
         var ink = {};
-        ink.home = "<%=base%>";
+        ink.home = document.getElementById('sidebar').getAttribute('data-home');
     </script>
 </div>

@@ -1,14 +1,9 @@
-<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    String base = request.getScheme()+"://"+request.getServerName()+(request.getServerPort()!=80?":"+request.getServerPort():"")+request.getContextPath()+"/";
-    Map<String,String> menus = (Map<String,String>) request.getAttribute("menus");
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="<%=base%>">
+    <base href="<c:url value='/'/>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
     <title>添加、修改导航栏</title>
@@ -78,36 +73,32 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">导航栏标题:</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" value="${pages.topmenuName }" name="topmenuName">
+                                        <input type="text" class="form-control" value="<c:out value='${pages.topmenuName}'/>" name="topmenuName">
                                         <small class="text-warning">必填项</small>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">导航栏内容:</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" value="${pages.topmenuContent }" name="topmenuContent">
+                                        <textarea class="form-control" rows="4" maxlength="2000" name="topmenuContent"><c:out value="${pages.topmenuContent}"/></textarea>
                                         <small class="text-warning">必填项</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-11 control-label">
                                 <!-- 修改时传递的ID -->
-                                <input type="hidden" value="${pages.id}" name="id">
-                                <!-- 上传图片 -->
-                                <input type="file" style="display:none;" name="fileToPic" id="fileToPic">
-                                <!-- 栏目 -->
-                                <input type="hidden" name="Emenu" id="d_memu">
+                                <input type="hidden" value="<c:out value='${pages.id}'/>" name="id">
                                 <!-- 地址传递 -->
                                 <input type="hidden" value="" name="locationhref" id="locationhref">
                                 <div class="clearfix form-group">
                                     <div class="col-md-offset-3 col-md-9">
                                         <button class="btn" type="reset">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            <i class="ace-icon fa fa-undo bigger-110" aria-hidden="true"></i>
                                             重置
                                         </button>
                                         &nbsp; &nbsp; &nbsp;
                                         <button class="btn btn-info" type="submit" id="submit">
-                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                            <i class="ace-icon fa fa-check bigger-110" aria-hidden="true"></i>
                                             提交
                                         </button>
                                     </div>
@@ -122,10 +113,6 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-        //栏目加载
-        window.setTimeout("lmpd(1)",50);
-        // window.setTimeout("lmpd(2)",1000);
-
         //地址传值
         var locationhref = location.href;
         if(locationhref.indexOf('?')!=-1){
@@ -176,24 +163,5 @@
 <!-- ace scripts -->
 <script src="admin/assets/js/ace-elements.min.js"></script>
 <script src="admin/assets/js/ace.min.js"></script>
-<!-- CAIKE common js Start-->
-<script src="admin/assets/js/plugin.js"></script>
-<script src="admin/assets/js/my/file-upload.js"></script>
-<script src="admin/assets/js/my/load-menu.js"></script>
-<script type="text/javascript" src="/editor/kindeditor/kindeditor.js"></script>
-<script type="text/javascript">
-    //编辑器初始化
-    var editor=null;
-    KindEditor.ready(function(K){
-        editor=K.create("#d_content",{
-            urlType:"domain",
-            cssPath:"<%=base%>editor/kindeditor/plugins/code/prettify.css",
-            uploadJson:ink.home+"admin/ajax/ckeditor.htm",
-            fileManagerJson:null,
-            allowFileManager:false
-        });
-    });
-</script>
-<!-- CAIKE common js END-->
 </body>
 </html>

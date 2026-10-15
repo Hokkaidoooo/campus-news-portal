@@ -2,13 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-    String base = request.getScheme()+"://"+request.getServerName()+(request.getServerPort()!=80?":"+request.getServerPort():"")+request.getContextPath()+"/";
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="<%=base%>">
+    <base href="<c:url value='/'/>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
     <title>首页导航栏管理</title>
@@ -101,13 +98,13 @@
                                         </div>
                                         <div class="form-group">
                                             <label></label>
-                                            <input type="text" class="form-control" id="fy_name" value="${pageutil.x_name }" onkeyup="fyhc(event)" placeholder="输入搜索关键字">
+                                            <input type="text" class="form-control" id="fy_name" value="<c:out value='${pageutil.x_name}'/>" onkeyup="fyhc(event)" placeholder="输入搜索关键字">
                                         </div>
                                         <button type="button" class="btn btn-info btn-sm" onclick="fyhc(null)">
-                                            <i class="ace-icon fa fa-search bigger-110"></i>搜索
+                                            <i class="ace-icon fa fa-search bigger-110" aria-hidden="true"></i>搜索
                                         </button>
                                         <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='${pageContext.request.contextPath}/servlets/topmenu/load.htm'">
-                                            <i class="ace-icon fa fa-plus-circle bigger-110"></i>添加
+                                            <i class="ace-icon fa fa-plus-circle bigger-110" aria-hidden="true"></i>添加
                                         </button>
                                     </div>
                                 </div>
@@ -140,22 +137,22 @@
                                                             <span class="lbl"></span>
                                                         </label>
                                                     </td>
-                                                    <td>${topmenu.id }</td>
-                                                    <td>${topmenu.topmenuName }</td>
+                                                    <td><c:out value="${topmenu.id}"/></td>
+                                                    <td><c:out value="${topmenu.topmenuName}"/></td>
                                                     <td>
-                                                        ${topmenu.topmenuContent}
+                                                        <c:out value="${topmenu.topmenuContent}"/>
                                                     </td>
                                                     <td class="hidden-480">
                                                         <fmt:formatDate value="${topmenu.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
                                                     </td>
                                                     <td>
                                                         <div class="">
-                                                            <a class="blue" href="javascript:fybj('${topmenu.id }')">
-                                                                <i class="ace-icon fa fa-pencil bigger-130"></i> 修改
+                                                            <a class="blue" href="#" data-edit-id="<c:out value='${topmenu.id}'/>">
+                                                                <i class="ace-icon fa fa-pencil bigger-130" aria-hidden="true"></i> 修改
                                                             </a>
                                                             &nbsp;
-                                                            <a class="red" href="javascript:fysc('${topmenu.id }')">
-                                                                <i class="ace-icon fa fa-trash-o bigger-130"></i> 删除
+                                                            <a class="red" href="#" data-delete-id="<c:out value='${topmenu.id}'/>">
+                                                                <i class="ace-icon fa fa-trash-o bigger-130" aria-hidden="true"></i> 删除
                                                             </a>
                                                         </div>
                                                     </td>
@@ -252,11 +249,9 @@
 <!-- ace scripts -->
 <script src="admin/assets/js/ace-elements.min.js"></script>
 <script src="admin/assets/js/ace.min.js"></script>
-<script type="text/javascript">
-    pubSelected("fy_pagesize",'${pageutil.x_pageSize}');
-    pubSelected("fy_order",'${pageutil.x_order}');
-    pubSelected("fy_sort",'${pageutil.x_sort}');
-    fysz('${pageutil.x_pageNow}',"servlets/topmenu/drop.htm","servlets/topmenu/load.htm","servlets/topmenu/list.htm");
-</script>
+<div id="page-settings" hidden data-size="<c:out value='${pageutil.x_pageSize}'/>"
+     data-order="<c:out value='${pageutil.x_order}'/>" data-sort="<c:out value='${pageutil.x_sort}'/>"
+     data-now="<c:out value='${pageutil.x_pageNow}'/>" data-kind="topmenu"></div>
+<script src="admin/assets/js/my/list-actions.js"></script>
 </body>
 </html>
